@@ -1,0 +1,25 @@
+
+name: Build VST3 (Windows)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release --target BrightnessSause_VST3
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: BrightnessSause-VST3
+          path: build/BrightnessSause_artefacts/Release/VST3/
